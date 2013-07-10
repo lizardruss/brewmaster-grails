@@ -69,7 +69,9 @@ class BootStrap {
                         description: "Testing",
                         aroma:"Terrible",
                         uses:[bitteringHops],
-                        origin:"US"
+                        origin:"US",
+                        substitutes: [],
+                        alphaAcidRange: new Range(from:4.5, to:7.0)
                 )
                 northernBrewer.save()
 
@@ -82,11 +84,11 @@ class BootStrap {
                 def dadsIrishRed = new Recipe(
                         name: "Dad's Irish Red",
                         description: "Malty Irish Red",
-//                        hops: [northernBrewer],
+                        hops: [northernBrewer],
                         malts: [twoRow]
                 )
-                dadsIrishRed.save()
-                break
+                dadsIrishRed.save();
+                break;
         }
     }
 

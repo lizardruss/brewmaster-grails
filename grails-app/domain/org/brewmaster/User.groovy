@@ -1,7 +1,6 @@
 package org.brewmaster
 
 class User {
-
     String userName;
     String password;
     String firstName;
