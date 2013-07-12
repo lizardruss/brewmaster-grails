@@ -35,6 +35,12 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         runtime 'mysql:mysql-connector-java:5.1.20'
+
+        compile('org.springframework.security:spring-security-acl:3.1.2.RELEASE') {
+            excludes 'spring-security-core', 'spring-context-support', 'spring-jdbc',
+                    'spring-test', 'ehcache', 'hsqldb', 'postgresql', 'junit',
+                    'mockito-core', 'jmock-junit4'
+        }
     }
 
     plugins {
@@ -51,5 +57,6 @@ grails.project.dependency.resolution = {
         build ":tomcat:$grailsVersion"
 
         compile ':cache:1.0.0'
+        compile ':spring-security-core:1.2.7.3'
     }
 }

@@ -5,7 +5,7 @@ class AuthorizingController {
 
     def auth() {
         if(!session.user) {
-            redirect(controller:"User", action:"login")
+            redirect(controller:"Brewer", action:"login")
             return false
         }
     }

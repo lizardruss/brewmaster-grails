@@ -3,15 +3,14 @@ package org.brewmaster
 
 
 import grails.test.mixin.*
-import org.junit.*
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
-@TestFor(Describable)
-class DescribableTests {
+@TestFor(Brewer)
+class BrewerTests {
 
     void testSomething() {
-       fail "Implement me"
+        fail "Implement me"
     }
 }

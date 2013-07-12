@@ -1,7 +1,10 @@
-<%=packageName ? "package ${packageName}\n\n" : ''%>import org.springframework.dao.DataIntegrityViolationException
+<%=packageName ? "package ${packageName}\n\n" : ''%>
+
+import org.springframework.dao.DataIntegrityViolationException
 
 import grails.converters.JSON
 import grails.converters.XML
+import grails.plugins.springsecurity.Secured
 
 class ${className}Controller {
 
@@ -11,6 +14,7 @@ class ${className}Controller {
         redirect(action: "list", params: params)
     }
 
+    @Secured(['ROLE_USER'])
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         def all = ${className}.list(params);
@@ -27,10 +31,12 @@ class ${className}Controller {
         }
     }
 
+    @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
     def create() {
         [${propertyName}: new ${className}(params)]
     }
 
+    @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
     def save() {
         def ${propertyName} = new ${className}(params)
         if (!${propertyName}.save(flush: true)) {
@@ -42,6 +48,7 @@ class ${className}Controller {
         redirect(action: "show", id: ${propertyName}.id)
     }
 
+    @Secured(['ROLE_USER'])
     def show(Long id) {
         def ${propertyName} = ${className}.get(id)
         if (!${propertyName}) {
@@ -53,6 +60,7 @@ class ${className}Controller {
         [${propertyName}: ${propertyName}]
     }
 
+    @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
     def edit(Long id) {
         def ${propertyName} = ${className}.get(id)
         if (!${propertyName}) {
@@ -64,6 +72,7 @@ class ${className}Controller {
         [${propertyName}: ${propertyName}]
     }
 
+    @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
     def update(Long id, Long version) {
         def ${propertyName} = ${className}.get(id)
         if (!${propertyName}) {
@@ -93,6 +102,7 @@ class ${className}Controller {
         redirect(action: "show", id: ${propertyName}.id)
     }
 
+    @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
     def delete(Long id) {
         def ${propertyName} = ${className}.get(id)
         if (!${propertyName}) {

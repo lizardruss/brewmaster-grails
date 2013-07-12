@@ -1,9 +1,12 @@
 import grails.util.Environment
+import org.brewmaster.Brewer
 import org.brewmaster.Hop
 import org.brewmaster.HopUsage
 import org.brewmaster.Malt
 import org.brewmaster.Range
 import org.brewmaster.Recipe
+import org.brewmaster.Role
+import org.brewmaster.UserRole
 
 class BootStrap {
 
@@ -13,6 +16,31 @@ class BootStrap {
 
         switch (Environment.current.name) {
             case "development":
+
+                def userRole = Role.findByAuthority('ROLE_USER') ?: new Role(authority: 'ROLE_USER').save(failOnError: true)
+                def adminRole = Role.findByAuthority('ROLE_ADMIN') ?: new Role(authority: 'ROLE_ADMIN').save(failOnError: true)
+
+                def adminUser = Brewer.findByUsername('admin') ?: new Brewer(
+                        username: 'admin',
+                        password: 'admin',
+                        enabled: true
+                ).save(failOnError: true)
+
+                if (!adminUser.authorities.contains(adminRole)) {
+                    UserRole.create adminUser, adminRole
+                }
+
+                def user1 = Brewer.findByUsername('user1') ?: new Brewer(
+                        username: 'user1',
+                        password: 'user1',
+                        enabled: true
+                ).save(failOnError: true)
+
+                if (!user1.authorities.contains(adminRole)) {
+                    UserRole.create user1, userRole
+                }
+
+
                 def dryHop = new HopUsage(
                         name: "Dry Hop",
                         description: "Infuses hop flavor and aroma into the beer.",
@@ -23,7 +51,7 @@ class BootStrap {
                                 "Replace airlock and sample beer each day until the desired level of hop aroma and flavor is reached."
                         ]
                 )
-                dryHop.save();
+                dryHop.save(failOnError: true);
 
                 def bitteringHops = new HopUsage(
                         name: "Bittering Hops",
@@ -32,7 +60,7 @@ class BootStrap {
                                 "Add hops early into the boil. Times and amounts will vary by recipe."
                         ]
                 )
-                bitteringHops.save();
+                bitteringHops.save(failOnError: true);
 
                 def aromaHops = new HopUsage(
                         name: "Aroma Hops",
@@ -41,7 +69,7 @@ class BootStrap {
                                 "Add hops late into the boil. Times and amounts will vary by recipe."
                         ]
                 )
-                aromaHops.save();
+                aromaHops.save(failOnError: true);
 
                 def amarillo = new Hop(
                         name: "Amarillo",
@@ -51,7 +79,7 @@ class BootStrap {
                         origin:"US",
                         alphaAcidRange: new Range(from:8.0, to:11.0)
                 )
-                amarillo.save()
+                amarillo.save(failOnError: true)
 
                 def cascade = new Hop(
                         name: "Cascade",
@@ -62,7 +90,7 @@ class BootStrap {
                         substitutes: [amarillo],
                         alphaAcidRange: new Range(from:4.5, to:7.0)
                 )
-                cascade.save()
+                cascade.save(failOnError: true)
 
                 def northernBrewer = new Hop(
                         name: "Northern Brewer",
@@ -73,13 +101,13 @@ class BootStrap {
                         substitutes: [],
                         alphaAcidRange: new Range(from:4.5, to:7.0)
                 )
-                northernBrewer.save()
+                northernBrewer.save(failOnError: true)
 
                 def twoRow = new Malt(
                         name: "2-Row",
                         description: "Base Malt"
                 )
-                twoRow.save()
+                twoRow.save(failOnError: true)
 
                 def dadsIrishRed = new Recipe(
                         name: "Dad's Irish Red",
@@ -87,7 +115,7 @@ class BootStrap {
                         hops: [northernBrewer],
                         malts: [twoRow]
                 )
-                dadsIrishRed.save();
+                dadsIrishRed.save(failOnError: true);
                 break;
         }
     }

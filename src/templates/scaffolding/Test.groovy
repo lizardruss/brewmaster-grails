@@ -57,7 +57,7 @@ class ${className}ControllerTests {
         populateValidParams(params)
         def ${propertyName} = new ${className}(params)
 
-        assert ${propertyName}.save() != null
+        assert ${propertyName}.save(failOnError:true) != null
 
         params.id = ${propertyName}.id
 
@@ -75,7 +75,7 @@ class ${className}ControllerTests {
         populateValidParams(params)
         def ${propertyName} = new ${className}(params)
 
-        assert ${propertyName}.save() != null
+        assert ${propertyName}.save(failOnError:true) != null
 
         params.id = ${propertyName}.id
 
@@ -95,7 +95,7 @@ class ${className}ControllerTests {
         populateValidParams(params)
         def ${propertyName} = new ${className}(params)
 
-        assert ${propertyName}.save() != null
+        assert ${propertyName}.save(failOnError:true) != null
 
         // test invalid parameters in update
         params.id = ${propertyName}.id
@@ -139,7 +139,7 @@ class ${className}ControllerTests {
         populateValidParams(params)
         def ${propertyName} = new ${className}(params)
 
-        assert ${propertyName}.save() != null
+        assert ${propertyName}.save(failOnError:true) != null
         assert ${className}.count() == 1
 
         params.id = ${propertyName}.id
